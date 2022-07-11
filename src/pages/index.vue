@@ -1,50 +1,31 @@
 <script setup lang="ts">
-const name = $ref('')
+const col = $ref(5)
+const row = $ref(4)
+const list = $ref(<any[]>[])
 
-const router = useRouter()
-const go = () => {
-  if (name)
-    router.push(`/hi/${encodeURIComponent(name)}`)
+function random(max: number): number {
+    return Math.floor(Math.random() * max)
+}
+
+for (let i = 0; i < col; i++) {
+    let flag = random(row)
+    list[i] = []
+    for (let j = 0; j < row; j++) {
+        list[i].push(j === flag)
+    }
 }
 </script>
 
 <template>
-  <div>
-    <div i-carbon-campsite text-4xl inline-block />
-    <p>
-      <a rel="noreferrer" href="https://github.com/antfu/vitesse-lite" target="_blank">
-        Vitesse Lite
-      </a>
-    </p>
-    <p>
-      <em text-sm op75>Opinionated Vite Starter Template</em>
-    </p>
+    <div class="wrap">
+        <div class="scroll flex flex-col">
+            <div class="col flex" v-for="c in list">
+                <div class="row flex-1" v-for="r in c" border
+                     :style="{ width: `${100 / row}vw`, height: `${100 / col}vh` }" :class="{ 'bg-blue-500': r }">
 
-    <div py-4 />
+                </div>
+            </div>
+        </div>
 
-    <input
-      id="input"
-      v-model="name"
-      placeholder="What's your name?"
-      type="text"
-      autocomplete="false"
-      p="x-4 y-2"
-      w="250px"
-      text="center"
-      bg="transparent"
-      border="~ rounded gray-200 dark:gray-700"
-      outline="none active:none"
-      @keydown.enter="go"
-    >
-
-    <div>
-      <button
-        class="m-3 text-sm btn"
-        :disabled="!name"
-        @click="go"
-      >
-        Go
-      </button>
     </div>
-  </div>
 </template>
