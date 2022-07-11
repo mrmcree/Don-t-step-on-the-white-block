@@ -22,7 +22,8 @@ const hideModal = () => {
 
 }
 const handleClick = (r: boolean, index: number) => {
-    console.log(r)
+    console.log(r, index)
+    if (index !== 4) return
     if (!r) {
         Modal.error({
             keyboard: false,
